@@ -1,5 +1,0 @@
-Esto es un fichero de pruebas
-A veces hay que hacer cosas para probar los ejercicios
-pruebas en la tercera línea
-Esto no se muestra con el grep
-pruebas aparece dos veces mientras hacemos pruebas
