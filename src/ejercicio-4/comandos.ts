@@ -26,9 +26,11 @@ export class Commands {
     });
   }
 
-  private FileOrDirectory(path: string) {
+  FileOrDirectory(path: string): boolean {
+    let result: boolean = true;
     lstat(`${path}`, (err, stats) => {
       if (err) {
+        result = false;
         return console.log(chalk.red(err));
       }
       if (stats.isFile()) {
@@ -37,6 +39,8 @@ export class Commands {
         console.log(chalk.green(`In this route you have a Directory`));
       }
     });
+
+    return result;
   }
 
   createADirectory() {
@@ -57,13 +61,16 @@ export class Commands {
     });
   }
 
-  private newDir(name: string) {
+  newDir(name: string): boolean {
+    let result: boolean = true;
     mkdir(`${name}`, (err) => {
       if (err) {
+        result = false;
         return console.error(err);
       }
       console.log(chalk.green('New Directory has been succesfully created'));
     });
+    return result;
   }
 
   listFilesfromDirectory() {
@@ -84,9 +91,11 @@ export class Commands {
     });
   }
 
-  private list(name: string) {
+  list(name: string): boolean {
+    let result: boolean = true;
     lstat(`${name}`, (err, stats) => {
       if (err) {
+        result = false;
         return console.log(chalk.red(err));
       }
 
@@ -105,6 +114,7 @@ export class Commands {
         console.log(chalk.red.inverse(`Your path is not a Directory`));
       }
     });
+    return result;
   }
 
  
@@ -125,11 +135,14 @@ export class Commands {
       },
     });
   }
-    private catFunction(route: string) {
-      lstat(`${route}`, (err, stats) => {
-      if (err) {
-        return console.log(chalk.red(err));
-      }
+  catFunction(route: string): boolean {
+    let result: boolean = true;
+
+    lstat(`${route}`, (err, stats) => {
+    if (err) {
+      result = false;
+      return console.log(chalk.red(err));
+    }
     
       if (stats.isDirectory()) {
         console.log(chalk.red.inverse(`Your path is not a Directory`));
@@ -142,6 +155,8 @@ export class Commands {
         });
       }
     });
+
+    return result;
   }
 
   removeFileOrDirectory() {
@@ -162,9 +177,12 @@ export class Commands {
     });
   }
 
-  private remove(route: string) {
+  remove(route: string): boolean {
+    let result: boolean = true;
+
     lstat(`${route}`, (err, stats) => {
       if (err) {
+        result = false;
         return console.log(chalk.red(err));
       }
       if (stats.isDirectory()) {
@@ -184,6 +202,7 @@ export class Commands {
         });
       }
     });
+    return result;
   }
 
   CopyMoveFileOrDirectory() {
@@ -214,7 +233,9 @@ export class Commands {
     });
   }
 
-  private move(oriRoute: string, destRoute: string, copy: boolean) {
+  move(oriRoute: string, destRoute: string, copy: boolean): boolean {
+    let result: boolean = true;
+
     if (copy === true) {
       const mv = spawn('mv', [`${oriRoute}`, `${destRoute}`]);
 
@@ -230,8 +251,11 @@ export class Commands {
         console.log(chalk.green(`File or Directory copied to ${destRoute}`));
       });
     } else {
+      result = false;
       console.log(chalk.red.inverse(`Option no available`));
     }
+
+    return result;
   }
 }
 
