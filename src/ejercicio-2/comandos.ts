@@ -36,4 +36,47 @@ export class Commands {
       },
     });
   }
+
+  catWithGrep() {
+    yargs.command({
+      command: 'grep',
+      describe: 'Bash command that finds the ocurrencies with a certain expression',
+      builder: {
+        file: {
+          describe: 'File name we want to read',
+          demandOption: true,
+          type: 'string',
+        },
+        expression: {
+          describe: 'Expression wanted to find in the file',
+          demandOption: true,
+          type: 'string',
+        },
+      },
+
+      handler(argv) {
+        const cat = spawn('cat', [`${argv.file}`]);
+        const grep = spawn('grep', [`${argv.expression}`]);
+
+        cat.stderr.on('data', (err) => {
+          console.error(err.toString());
+        });
+
+        cat.stdout.pipe(grep.stdin);
+
+        let consoleOutput = '';
+        grep.stdout.on('data', (piece) => {
+          consoleOutput += piece;
+        });
+
+        grep.stderr.on('data', (err) => {
+          console.error(err.toString());
+        });
+
+        grep.on('close', () => {
+          process.stdout.write(consoleOutput);
+        });
+      },
+    });
+  }
 }
