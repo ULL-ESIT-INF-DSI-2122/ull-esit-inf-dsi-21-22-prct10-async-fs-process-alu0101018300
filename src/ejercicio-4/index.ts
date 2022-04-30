@@ -6,5 +6,6 @@ const testCommands: Commands = new Commands();
 testCommands.checkFileOrDirectory();
 testCommands.createADirectory();
 testCommands.listFilesfromDirectory();
+testCommands.showContent()
 
 yargs.parse();

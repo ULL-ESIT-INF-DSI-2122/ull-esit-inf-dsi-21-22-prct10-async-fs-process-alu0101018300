@@ -103,10 +103,49 @@ export class Commands {
           });
 
       } else if (stats.isFile()) {
-        console.log(chalk.red(`Your path is not a Directory`));
+        console.log(chalk.red.inverse(`Your path is not a Directory`));
+      }
+    });
+  }
+
+ 
+  showContent() {
+    yargs.command({
+      command: 'cat',
+      describe: 'Show files content',
+      builder: {
+        route: {
+          describe: 'Path of the file',
+          demandOption: true,
+          type: 'string',
+        },
+      },
+      handler(argv) {
+        const show = new Commands();
+        show.catFunction(`${argv.route}`);
+      },
+    });
+  }
+    private catFunction(route: string) {
+      lstat(`${route}`, (err, stats) => {
+      if (err) {
+        return console.log(chalk.red(err));
+      }
+    
+      if (stats.isDirectory()) {
+        console.log(chalk.red.inverse(`Your path is not a Directory`));
+      }
+
+      else {
+        const cat = spawn('cat', [`${route}`]);
+        cat.stdout.on('data', (catResult) => {
+          console.log(chalk.green(catResult.toString("utf8")));
+        });
       }
     });
   }
 }
+
+
 
 
