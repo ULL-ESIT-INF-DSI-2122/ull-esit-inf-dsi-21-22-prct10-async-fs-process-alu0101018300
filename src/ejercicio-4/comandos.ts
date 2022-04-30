@@ -2,8 +2,7 @@ import * as yargs from 'yargs';
 import * as chalk from 'chalk';
 
 import {spawn} from 'child_process';
-import {lstat} from 'fs';
-import {mkdir} from 'fs';
+import {lstat, mkdir, rmdir, unlink} from 'fs';
 
 export class Commands {
 
@@ -140,6 +139,48 @@ export class Commands {
         const cat = spawn('cat', [`${route}`]);
         cat.stdout.on('data', (catResult) => {
           console.log(chalk.green(catResult.toString("utf8")));
+        });
+      }
+    });
+  }
+
+  removeFileOrDirectory() {
+    yargs.command({
+      command: 'rm',
+      describe: 'Delete a file or a directory',
+      builder: {
+        route: {
+          describe: 'Path of the thing you want to remove',
+          demandOption: true,
+          type: 'string',
+        },
+      },
+      handler(argv) {
+        const deletes = new Commands();
+        deletes.remove(`${argv.route}`);
+      },
+    });
+  }
+
+  private remove(route: string) {
+    lstat(`${route}`, (err, stats) => {
+      if (err) {
+        return console.log(chalk.red(err));
+      }
+      if (stats.isDirectory()) {
+        rmdir(`${route}`, (err) => {
+          if (err) {
+            console.log(chalk.red(err));
+          }
+          console.log(chalk.green('Directory succesfully deleted'));
+        });
+
+      } else if (stats.isFile()) {
+        unlink(`${route}`, (err) => {
+          if (err) {
+            console.log(chalk.red(err));
+          }
+          console.log(chalk.green('File succesfully deleted'));
         });
       }
     });
