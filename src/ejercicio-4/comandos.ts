@@ -185,6 +185,54 @@ export class Commands {
       }
     });
   }
+
+  CopyMoveFileOrDirectory() {
+    yargs.command({
+      command: 'mv',
+      describe: 'Copy/Moves a File or a Directory',
+      builder: {
+        oriRoute: {
+          describe: 'Path of the file or Directory we want to Move / Copy',
+          demandOption: true,
+          type: 'string',
+        },
+        destRoute: {
+          describe: 'Path',
+          demandOption: true,
+          type: 'string',
+        },
+        copy: {
+          describe: 'Flag',
+          demandOption: true,
+          type: 'boolean',
+        },
+      },
+      handler(argv) {
+        const mv = new Commands();
+        mv.move(`${argv.oriRoute}`, `${argv.destRoute}`, argv.copy as boolean);
+      },
+    });
+  }
+
+  private move(oriRoute: string, destRoute: string, copy: boolean) {
+    if (copy === true) {
+      const mv = spawn('mv', [`${oriRoute}`, `${destRoute}`]);
+
+      mv.on('close', () => {
+        console.log(chalk.green(`File or Directory moved to ${destRoute}`));
+      });
+    } 
+    
+    else if (copy === false) {
+      const cp = spawn('cp', [`${oriRoute}`, `${destRoute}`]);
+
+      cp.on('close', () => {
+        console.log(chalk.green(`File or Directory copied to ${destRoute}`));
+      });
+    } else {
+      console.log(chalk.red.inverse(`Option no available`));
+    }
+  }
 }
 
 

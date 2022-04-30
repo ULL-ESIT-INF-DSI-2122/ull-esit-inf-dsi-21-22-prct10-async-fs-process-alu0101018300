@@ -8,5 +8,6 @@ testCommands.createADirectory();
 testCommands.listFilesfromDirectory();
 testCommands.showContent();
 testCommands.removeFileOrDirectory();
+testCommands.CopyMoveFileOrDirectory();
 
 yargs.parse();
