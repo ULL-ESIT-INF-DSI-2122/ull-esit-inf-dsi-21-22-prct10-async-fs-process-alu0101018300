@@ -64,7 +64,7 @@ export class Commands {
 
         cat.stdout.pipe(grep.stdin);
 
-        let consoleOutput = '';
+        let consoleOutput: string = '';
         grep.stdout.on('data', (piece) => {
           consoleOutput += piece;
         });
