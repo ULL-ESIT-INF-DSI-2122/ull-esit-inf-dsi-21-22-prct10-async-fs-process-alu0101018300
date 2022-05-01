@@ -1,1 +1,8 @@
+title: Sistema de ficheros y creación de procesos en Node.js
+author: Adrian Ramos Mejias
+email: alu0101018300@ull.edu.es
+description: > # this means to ignore newlines until "baseurl:"
+  Desarrollo de la practica 10 de la asignatura de Desarrollo de Sistemas 
+  Informáticos, donde hay que familiarizarse con el sistema de ficheros
+  y la creación de procesos en nodeJS.
 theme: jekyll-theme-cayman
