@@ -40,7 +40,7 @@ describe('test Comando rm', () => {
     expect(test.remove("./hola/pruebas.txt")).to.eq(true); 
   });
   it('object.remove() returns the correct result', () => {
-    expect(test.remove("./hola")).to.eq(true); 
+    expect(test.remove("hola")).to.eq(true); 
   });
 });
 
