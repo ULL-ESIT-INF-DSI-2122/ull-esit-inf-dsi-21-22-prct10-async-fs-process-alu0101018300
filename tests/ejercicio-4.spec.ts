@@ -3,6 +3,9 @@ import { expect } from 'chai';
 
 import { Commands } from '../src/ejercicio-4/comandos'
 
+/**
+ * Objeto para las pruebas
+ */
 const test: Commands = new Commands();
 
 describe('test Comandos class constructor', () => {
