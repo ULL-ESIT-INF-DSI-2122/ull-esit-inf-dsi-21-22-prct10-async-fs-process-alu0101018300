@@ -2,11 +2,18 @@ import {spawn} from 'child_process';
 import * as yargs from 'yargs';
 import * as chalk from 'chalk';
 
-
+/**
+ * Clase Commands, la cual contentrá las operaciones que realizarán los comandos
+ * que nos interesan
+ */
 export class Commands {
 
   constructor() {}
 
+  /**
+   * Función que realiza el comando cat a través de yargs, pasando 
+   * como opción la ruta del fichero que queremos leer.
+   */
   catNoPipes() {
     yargs.command({
       command: 'cat',
@@ -26,6 +33,10 @@ export class Commands {
     });
   }
 
+  /**
+   * Función que realiza el cat mediante creación de procesos con spawn.
+   * @param fileName Nombre del fichero que queremos leer.
+   */
   catFile(fileName: string): boolean {
     let result: boolean = true;
     const cat = spawn('cat', [`${fileName}`]);
@@ -50,6 +61,11 @@ export class Commands {
 
   }
 
+  /**
+   * Función que realiza el comando cat con pipe a través de yargs, pasando 
+   * como opción la ruta del fichero que queremos leer y la expresión por la
+   * que queremos filtrar.
+   */
   catWithGrep() {
     yargs.command({
       command: 'grep',
@@ -74,6 +90,11 @@ export class Commands {
     });
   }
 
+  /**
+   * Función que realiza el cat | grep mediante creación de procesos con spawn.
+   * @param file nombre del fichero en el que queremos mirar.
+   * @param expression Expresión que deseamos encontrar en el fichero.
+   */
   grepFile(file: string, expression: string): boolean {
     let result: boolean = true;
 

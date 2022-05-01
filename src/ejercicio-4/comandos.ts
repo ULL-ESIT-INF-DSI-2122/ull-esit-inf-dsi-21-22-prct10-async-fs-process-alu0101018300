@@ -4,10 +4,19 @@ import * as chalk from 'chalk';
 import {spawn} from 'child_process';
 import {lstat, mkdir, rmdir, unlink} from 'fs';
 
+/**
+ * Clase Commands, la cual contentrá las operaciones que realizarán los comandos
+ * que nos interesan
+ */
 export class Commands {
 
   constructor() {}
 
+  /**
+   * Función que mediante yargs, llama la función que posteriormente que
+   * realiza la acción. Se le pasa como opción la ruta del fichero que 
+   * se quiere comprobar.
+   */
   checkFileOrDirectory() {
     yargs.command({
       command: 'check',
@@ -26,6 +35,10 @@ export class Commands {
     });
   }
 
+  /**
+   * Función que comprueba si una ruta es un fichero o un directorio.
+   * @param path Ruta que queremos comprobar
+   */
   FileOrDirectory(path: string): boolean {
     let result: boolean = true;
     lstat(`${path}`, (err, stats) => {
@@ -43,6 +56,11 @@ export class Commands {
     return result;
   }
 
+  /**
+   * Función que mediante yargs, llama la función que posteriormente que
+   * realiza la acción. Se le pasa como opción el nombre que va a tener 
+   * un directorio.
+   */
   createADirectory() {
     yargs.command({
       command: 'mkdir',
@@ -61,6 +79,10 @@ export class Commands {
     });
   }
 
+  /**
+   * Función que crea un directorio
+   * @param name Nombre que va a tener el directorio.
+   */
   newDir(name: string): boolean {
     let result: boolean = true;
     mkdir(`${name}`, (err) => {
@@ -73,6 +95,10 @@ export class Commands {
     return result;
   }
 
+  /**
+   * Función que mediante yargs, llama la función que posteriormente que
+   * realiza la acción. Se le pasa como opción la ruta del directorio.
+   */
   listFilesfromDirectory() {
     yargs.command({
       command: 'ls',
@@ -91,6 +117,10 @@ export class Commands {
     });
   }
 
+  /**
+   * Función que lista el contenido de un directorio
+   * @param name ruta/nombre del directorio del que queremos comprobarlo.
+   */
   list(name: string): boolean {
     let result: boolean = true;
     lstat(`${name}`, (err, stats) => {
@@ -117,7 +147,11 @@ export class Commands {
     return result;
   }
 
- 
+  /**
+   * Función que mediante yargs, llama la función que posteriormente que
+   * realiza la acción. Se le pasa como opción la ruta del fichero que 
+   * queremos leer.
+   */ 
   showContent() {
     yargs.command({
       command: 'cat',
@@ -135,6 +169,11 @@ export class Commands {
       },
     });
   }
+
+  /**
+   * Función que muestra el contenido de un fichero
+   * @param route ruta donde se encuentra el fichero.
+   */
   catFunction(route: string): boolean {
     let result: boolean = true;
 
@@ -159,6 +198,11 @@ export class Commands {
     return result;
   }
 
+  /**
+   * Función que mediante yargs, llama la función que posteriormente que
+   * realiza la acción. Se le pasa como opción la ruta del elemento que 
+   * deseamos eliminar
+   */
   removeFileOrDirectory() {
     yargs.command({
       command: 'rm',
@@ -177,6 +221,10 @@ export class Commands {
     });
   }
 
+  /**
+   * Función que elimina un directorio vacío o un fichero
+   * @param route ruta del elemento que deseamos eliminar
+   */
   remove(route: string): boolean {
     let result: boolean = true;
 
@@ -205,6 +253,12 @@ export class Commands {
     return result;
   }
 
+  /**
+   * Función que mediante yargs, llama la función que posteriormente que
+   * realiza la acción. Se le pasa como opción la ruta del elemento que 
+   * deseamos copiar, la ruta donde deseamos copiarlo y si deseamos
+   * copiarlo o moverlo.
+   */
   CopyMoveFileOrDirectory() {
     yargs.command({
       command: 'mv',
@@ -233,6 +287,12 @@ export class Commands {
     });
   }
 
+  /**
+   * Función que copia / mueve un fichero 
+   * @param oriRoute Ruta de origen
+   * @param destRoute Ruta de destino
+   * @param copy Flag para saber si queremos copiarlo o moverlo.
+   */
   move(oriRoute: string, destRoute: string, copy: boolean): boolean {
     let result: boolean = true;
 

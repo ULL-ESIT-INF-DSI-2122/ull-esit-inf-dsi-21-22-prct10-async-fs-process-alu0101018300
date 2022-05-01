@@ -1,6 +1,9 @@
 {
     "entryPoints": [
-        "./src/index.ts"
+        "./src/ejercicio-2/comandos.ts",
+        "./src/ejercicio-2/index.ts",
+        "./src/ejercicio-4/comandos.ts",
+        "./src/ejercicio-4/index.ts"
       ],
     "out": "documentation/"
   }
