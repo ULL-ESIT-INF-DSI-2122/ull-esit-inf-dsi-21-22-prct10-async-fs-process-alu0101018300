@@ -115,7 +115,7 @@ catNoPipes() {
   gracias a *spawn*. En caso de que haya algún error nos mostrará el mensaje de error en color rojo, mediante
   la herramienta *chalk*.
   
-  ##### Comando Cat | Grep
+  ##### Comando Grep
   
   ``` typescript
   catWithGrep() {
