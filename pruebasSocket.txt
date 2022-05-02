@@ -1,0 +1,2 @@
+Esto es un fichero de pruebas para comprobar el funcionamiento de 
+los sockets.
